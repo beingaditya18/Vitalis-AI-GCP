@@ -458,4 +458,3 @@ For issues, questions, or contributions:
 **Built with ❤️ for Rural Healthcare in India**
 
 **Version:** 2.0.0 (with Mobile Authentication)  
-**Last Updated:** 2024
