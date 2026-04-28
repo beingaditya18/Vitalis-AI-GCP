@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visual Intelligence - Vitalis AI CDSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor-dashboard-functional.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>.tool-content { padding: 40px; }</style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="logo-section">
+            <a href="/doctor" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="logo-text" style="margin-left: 20px;">
+                <h1>Visual Intelligence</h1>
+                <p>Computer Vision Image Analysis</p>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top: 64px;" class="tool-content">
+        <div class="sidebar-card text-center" style="padding: 60px;">
+            <i class="fas fa-upload" style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;"></i>
+            <h3>Upload Medical Scan</h3>
+            <p class="text-muted">Supports X-Ray, MRI, and CT Scans for AI-assisted anomaly detection.</p>
+            <input type="file" style="display:none;" id="scanUpload">
+            <button class="btn btn-primary" onclick="document.getElementById('scanUpload').click()">Select File</button>
+        </div>
+    </div>
+</body>
+</html>

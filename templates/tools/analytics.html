@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics - Vitalis AI CDSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor-dashboard-functional.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>.tool-content { padding: 40px; }</style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="logo-section">
+            <a href="/doctor" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="logo-text" style="margin-left: 20px;">
+                <h1>Clinical Analytics</h1>
+                <p>Performance Metrics</p>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top: 64px;" class="tool-content">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <h3>AI Agreement Rate</h3>
+                    <div class="stat-value text-success">88%</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <h3>Time Saved / Case</h3>
+                    <div class="stat-value text-primary">4.2 min</div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-card mt-4">
+            <h3 class="text-center text-muted" style="padding: 50px;">Chart visualization will be displayed here</h3>
+        </div>
+    </div>
+</body>
+</html>

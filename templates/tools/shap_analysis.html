@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHAP Analysis - Vitalis AI CDSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor-dashboard-functional.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .tool-content { padding: 40px; }
+        .chart-container { position: relative; height: 400px; width: 100%; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="logo-section">
+            <a href="/doctor" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            <div class="logo-text" style="margin-left: 20px;">
+                <h1>SHAP Analysis</h1>
+                <p>Explainable AI Insights for Patient Anjali Desai</p>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top: 64px;" class="tool-content">
+        <div class="sidebar-card">
+            <h2><i class="fas fa-brain text-primary"></i> Decision Explainability</h2>
+            <p class="text-muted">Understanding why the AI recommended 'Acute Myocardial Infarction' with 94% confidence.</p>
+            <div class="chart-container">
+                <canvas id="shapChart"></canvas>
+            </div>
+            <div style="margin-top: 30px;" class="text-muted">
+                <p><i class="fas fa-info-circle text-primary"></i> <strong>Interpretation:</strong> The SHAP summary plot above shows the relative impact of each clinical feature on the model's prediction. Features pushing the bar to the right (positive values) increase the likelihood of the prediction, while those pushing left decrease it.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('shapChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'Chest Pain (Radiating to Left Arm)', 
+                        'Sweating (Diaphoresis)', 
+                        'ECG: ST Elevation', 
+                        'Patient Age (58)', 
+                        'Shortness of Breath', 
+                        'Cholesterol (LDL: 180)', 
+                        'Blood Pressure (150/95)'
+                    ],
+                    datasets: [{
+                        label: 'SHAP Value (Impact on Model Output)',
+                        data: [0.85, 0.65, 0.92, 0.45, 0.35, 0.25, 0.20],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.8)', // High impact (danger)
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(245, 158, 11, 0.8)', // Medium impact (warning)
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(16, 185, 129, 0.8)', // Lower impact
+                            'rgba(16, 185, 129, 0.8)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Makes the bar chart horizontal
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'SHAP Value (Impact)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

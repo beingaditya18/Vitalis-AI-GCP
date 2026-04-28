@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitalis AI - ASHA Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .task-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .task-item.completed {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo text-gradient">Vitalis AI ASHA</div>
+            <nav>
+                <a href="#" class="nav-item active">Overview</a>
+                <a href="#patients" class="nav-item">My Patients</a>
+                <a href="#maternal" class="nav-item">Maternal Health</a>
+                <a href="#doctors" class="nav-item">Doctors</a>
+                <a href="#claims" class="nav-item">Claims</a>
+                <a href="#settings" class="nav-item">Settings</a>
+            </nav>
+            <div style="margin-top: auto;">
+                <a href="/api/auth/logout" class="nav-item" style="text-align: center; display: block;">Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content animate-fade-in">
+            <header style="margin-bottom: 30px;">
+                <h2>Welcome, ASHA Worker</h2>
+                <p style="color: var(--text-light); opacity: 0.8;">Village: Rampur Block | District: Demo</p>
+            </header>
+
+            <div class="stats-grid" id="ashaStats">
+                <!-- Stats injected by JS -->
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+                
+                <!-- Center Column -->
+                <div>
+                    <section class="glass-panel" id="tasks">
+                        <h3>Today's Tasks</h3>
+                        <ul class="task-list" id="taskList">
+                            <!-- Tasks injected by JS -->
+                        </ul>
+                    </section>
+
+                    <section class="glass-panel mt-4" style="margin-top: 30px;" id="maternal">
+                        <h3>Maternal & Women's Health Focus</h3>
+                        <div style="display: flex; gap: 20px;">
+                            <div style="flex: 1; text-align: center; background: rgba(245, 166, 35, 0.1); padding: 20px; border-radius: 10px; border: 1px solid var(--accent);">
+                                <h2 style="color: var(--accent);">15</h2>
+                                <p>Expected Deliveries</p>
+                            </div>
+                            <div style="flex: 1; text-align: center; background: rgba(80, 227, 194, 0.1); padding: 20px; border-radius: 10px; border: 1px solid var(--secondary);">
+                                <h2 style="color: var(--secondary);">42</h2>
+                                <p>Immunizations Due</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column (Charts) -->
+                <div>
+                    <section class="glass-panel">
+                        <h3>Risk Distribution</h3>
+                        <div class="chart-container">
+                            <canvas id="riskChart"></canvas>
+                        </div>
+                    </section>
+
+                    <section class="glass-panel mt-4" style="margin-top: 30px;">
+                        <h3>Monthly Visits</h3>
+                        <div class="chart-container">
+                            <canvas id="visitsChart"></canvas>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/asha.js"></script>
+</body>
+</html>

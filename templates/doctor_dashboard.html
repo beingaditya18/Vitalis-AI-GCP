@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Vitalis AI CDSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor-dashboard-functional.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Skip to Main Content -->
+    <a href="#main-content" class="skip-to-main">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="dashboard-header" role="banner">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-stethoscope" aria-hidden="true"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Vitalis AI CDSS</h1>
+                    <p>Clinical Decision Support System</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn" id="notification-bell" aria-label="Notifications">
+                    <i class="fas fa-bell" aria-hidden="true"></i>
+                    <span class="notification-badge" id="notification-badge" style="display: none;">0</span>
+                </button>
+                <div class="profile-section">
+                    <span id="doctor-name">Dr. {{ current_user.full_name if current_user else 'Doctor' }}</span>
+                    <div class="profile-icon" aria-label="User profile">
+                        <i class="fas fa-user-md" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Notification Dropdown -->
+        <div class="notification-dropdown" id="notification-dropdown" style="display: none;" role="region" aria-label="Notifications">
+            <div class="notification-header">
+                <h3>Notifications</h3>
+            </div>
+            <div class="notification-list" id="notification-list">
+                <p class="empty-state">No new notifications</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <main id="main-content" role="main">
+            <!-- Stats Cards Section -->
+            <section class="stats-grid" aria-label="Dashboard statistics">
+                <div class="stat-card">
+                    <div class="stat-icon new-cases">
+                        <i class="fas fa-user-plus" aria-hidden="true"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>New Cases</h3>
+                        <div class="stat-value" id="new-cases-value" aria-live="polite">0</div>
+                        <div class="stat-label">Last 24 hours</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon total-assessments">
+                        <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Assessments</h3>
+                        <div class="stat-value" id="total-assessments-value" aria-live="polite">0</div>
+                        <div class="stat-label">All time</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon high-risk">
+                        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>High Risk Alerts</h3>
+                        <div class="stat-value" id="high-risk-alerts-value" aria-live="polite">0</div>
+                        <div class="stat-label">Requires attention</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon critical">
+                        <i class="fas fa-heartbeat" aria-hidden="true"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Critical Risk</h3>
+                        <div class="stat-value" id="critical-risk-value" aria-live="polite">0</div>
+                        <div class="stat-label">Immediate action needed</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clinical Tools Section -->
+            <section class="tools-section">
+                <h2>Clinical Tools</h2>
+                <div class="tools-grid">
+                    <div class="tool-card" data-tool="risk-assessment">
+                        <div class="tool-icon risk-assessment">
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        </div>
+                        <h3>Risk Assessment</h3>
+                        <p>Evaluate patient risk levels using AI-powered analysis</p>
+                        <button class="tool-btn" aria-label="Open Risk Assessment tool">
+                            Open Tool <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-tool="shap-analysis">
+                        <div class="tool-icon shap-analysis">
+                            <i class="fas fa-brain" aria-hidden="true"></i>
+                        </div>
+                        <h3>SHAP Analysis</h3>
+                        <p>Understand AI decision-making with explainable insights</p>
+                        <button class="tool-btn" aria-label="Open SHAP Analysis tool">
+                            Open Tool <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-tool="visual-intelligence">
+                        <div class="tool-icon visual-intelligence">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
+                        </div>
+                        <h3>Visual Intelligence</h3>
+                        <p>Analyze medical images with computer vision AI</p>
+                        <button class="tool-btn" aria-label="Open Visual Intelligence tool">
+                            Open Tool <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-tool="rag-assistant">
+                        <div class="tool-icon rag-assistant">
+                            <i class="fas fa-book-medical" aria-hidden="true"></i>
+                        </div>
+                        <h3>RAG Assistant</h3>
+                        <p>Access medical knowledge with retrieval-augmented generation</p>
+                        <button class="tool-btn" aria-label="Open RAG Assistant tool">
+                            Open Tool <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-tool="ai-chatbot">
+                        <div class="tool-icon ai-chatbot">
+                            <i class="fas fa-comments" aria-hidden="true"></i>
+                        </div>
+                        <h3>AI Chatbot</h3>
+                        <p>Interactive clinical assistant for patient queries</p>
+                        <button class="tool-btn" aria-label="Open AI Chatbot tool">
+                            Open Tool <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-tool="prescription-engine">
+                        <div class="tool-icon prescription-engine">
+                            <i class="fas fa-prescription-bottle-alt" aria-hidden="true"></i>
+                        </div>
+                        <h3>Prescription Engine</h3>
+                        <p>Generate and manage prescriptions with safety checks</p>
+                        <button class="tool-btn" aria-label="Open Prescription Engine tool">
+                            Open Tool <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-tool="three-layer-explanation">
+                        <div class="tool-icon three-layer-explanation">
+                            <i class="fas fa-layer-group" aria-hidden="true"></i>
+                        </div>
+                        <h3>Three-Layer Explanation</h3>
+                        <p>Multi-level explanations for complex medical decisions</p>
+                        <button class="tool-btn" aria-label="Open Three-Layer Explanation tool">
+                            Open Tool <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="tool-card" data-tool="analytics">
+                        <div class="tool-icon analytics">
+                            <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                        </div>
+                        <h3>Analytics</h3>
+                        <p>View comprehensive analytics and performance metrics</p>
+                        <button class="tool-btn" aria-label="Open Analytics tool">
+                            Open Tool <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pending AI Summaries Section -->
+            <section class="summaries-section">
+                <h2>Pending AI Summaries</h2>
+                <div class="summaries-container">
+                    <div id="pending-summaries-list" aria-live="polite" aria-label="Pending AI summaries list">
+                        <p class="empty-state">Loading summaries...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patient List Section -->
+            <section class="patients-section">
+                <div class="section-header">
+                    <h2>Patient List</h2>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-filter="high-risk">High Risk</button>
+                        <button class="filter-btn" data-filter="critical">Critical</button>
+                    </div>
+                </div>
+                <div id="patient-list" class="patient-list" aria-live="polite">
+                    <p class="empty-state">Loading patients...</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" role="complementary">
+            <!-- Patient Search Card -->
+            <div class="sidebar-card">
+                <h4>
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    Patient Search
+                </h4>
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        id="patient-search-input" 
+                        class="search-input" 
+                        placeholder="Search by name or ID..." 
+                        aria-label="Search for patients"
+                    >
+                    <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                </div>
+                <div id="search-results" class="search-results" aria-live="polite">
+                    <!-- Search results populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Quick Actions Card -->
+            <div class="sidebar-card">
+                <h4>
+                    <i class="fas fa-bolt" aria-hidden="true"></i>
+                    Quick Actions
+                </h4>
+                <div class="quick-actions">
+                    <button class="quick-action-btn" data-action="todays-queue" aria-label="View today's patient queue">
+                        <i class="fas fa-calendar-day" aria-hidden="true"></i>
+                        <span>Today's Queue</span>
+                    </button>
+                    <button class="quick-action-btn" data-action="high-risk-patients" aria-label="View high risk patients">
+                        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                        <span>High Risk Patients</span>
+                    </button>
+                    <button class="quick-action-btn" data-action="pending-reviews" aria-label="View pending reviews">
+                        <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+                        <span>Pending Reviews</span>
+                    </button>
+                    <button class="quick-action-btn" data-action="my-facility" aria-label="View My Facility" onclick="window.location.href='/facility'">
+                        <i class="fas fa-building" aria-hidden="true"></i>
+                        <span>My Facility</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activity Feed Card -->
+            <div class="sidebar-card">
+                <h4>
+                    <i class="fas fa-stream" aria-hidden="true"></i>
+                    Activity Feed
+                </h4>
+                <div id="activity-feed-list" class="activity-feed" aria-live="polite">
+                    <p class="empty-state">Loading activity...</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Toast Container for Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/session-timeout.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/doctor-dashboard-functional.js') }}"></script>
+    
+    <script>
+        // Initialize dashboard when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Doctor Dashboard Initializing...');
+            
+            // Initialize API client
+            window.api = new DoctorDashboardAPI();
+            
+            // Initialize error handler
+            window.errorHandler = new ErrorHandler();
+            
+            // Initialize notification manager
+            window.notificationManager = new NotificationManager(api);
+            
+            // Load initial data
+            loadDashboardStats();
+            loadPendingSummaries();
+            loadActivityFeed();
+            loadPatientList();
+            
+            // Initialize patient filters
+            initializePatientFilters();
+            
+            // Initialize patient search with debouncing
+            initializePatientSearch();
+            
+            // Initialize clinical tool navigation
+            initializeToolNavigation();
+            
+            // Initialize quick actions
+            initializeQuickActions();
+            
+            // Set up polling for real-time updates
+            const activityPoller = new PollingManager(loadActivityFeed, 30000); // 30 seconds
+            const notificationPoller = new PollingManager(() => notificationManager.loadNotifications(), 60000); // 60 seconds
+            
+            activityPoller.start();
+            notificationPoller.start();
+            
+            console.log('✅ Doctor Dashboard Initialized Successfully');
+        });
+        
+        // Initialize patient search with debouncing
+        function initializePatientSearch() {
+            const searchInput = document.getElementById('patient-search-input');
+            if (!searchInput) return;
+            
+            let debounceTimer;
+            searchInput.addEventListener('input', function(e) {
+                clearTimeout(debounceTimer);
+                const query = e.target.value.trim();
+                
+                if (query.length === 0) {
+                    document.getElementById('search-results').innerHTML = '';
+                    return;
+                }
+                
+                debounceTimer = setTimeout(async () => {
+                    await searchPatients(query);
+                }, 300);
+            });
+        }
+        
+        // Search patients
+        async function searchPatients(query) {
+            try {
+                const response = await api.get(`/patients/search?q=${encodeURIComponent(query)}`);
+                
+                if (response.success) {
+                    displaySearchResults(response.data);
+                }
+            } catch (error) {
+                console.error('Search failed:', error);
+            }
+        }
+        
+        // Display search results
+        function displaySearchResults(patients) {
+            const container = document.getElementById('search-results');
+            if (!container) return;
+            
+            if (patients.length === 0) {
+                container.innerHTML = '<div class="empty-state">No patients found</div>';
+                return;
+            }
+            
+            container.innerHTML = patients.map(patient => `
+                <div class="search-result-item" onclick="navigateToPatientDetail(${patient.id})">
+                    <div class="patient-name">${escapeHtml(patient.name)}</div>
+                    <div class="patient-id">ID: ${patient.id}</div>
+                </div>
+            `).join('');
+        }
+        
+        // Initialize clinical tool navigation
+        function navigateToTool(toolName) {
+            const toolRoutes = {
+                'risk-assessment': '/doctor/tools/risk-assessment',
+                'shap-analysis': '/doctor/tools/shap',
+                'visual-intelligence': '/doctor/tools/visual-scan',
+                'rag-assistant': '/doctor/tools/rag-assistant',
+                'ai-chatbot': '/doctor/tools/chatbot',
+                'prescription-engine': '/doctor/tools/prescription',
+                'three-layer-explanation': '/doctor/tools/three-layer-explanation',
+                'analytics': '/doctor/tools/analytics'
+            };
+            
+            const route = toolRoutes[toolName];
+            if (route) {
+                window.location.href = route;
+            } else {
+                errorHandler.showWarning('This tool is not yet available');
+            }
+        }
+
+        function initializeToolNavigation() {
+            const toolCards = document.querySelectorAll('.tool-card');
+            
+            toolCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const tool = this.getAttribute('data-tool');
+                    navigateToTool(tool);
+                });
+                
+                // Keyboard support
+                card.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        const tool = this.getAttribute('data-tool');
+                        navigateToTool(tool);
+                    }
+                });
+            });
+        }
+        
+        // Initialize quick actions
+        function initializeQuickActions() {
+            const actionButtons = document.querySelectorAll('.quick-action-btn');
+            
+            actionButtons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    const action = this.getAttribute('data-action');
+                    await handleQuickAction(action);
+                });
+            });
+        }
+        
+        // Handle quick action
+        async function handleQuickAction(action) {
+            try {
+                if (action === 'todays-queue') {
+                    const response = await api.get('/patients/queue/today');
+                    if (response.success) {
+                        displayPatientList(response.data.queue);
+                        errorHandler.showSuccess(`Found ${response.data.queue.length} patients in today's queue`);
+                    }
+                } else if (action === 'high-risk-patients') {
+                    const response = await api.get('/patients/high-risk');
+                    if (response.success) {
+                        displayHighRiskPatients(response.data);
+                        errorHandler.showSuccess(`Found ${response.data.length} high-risk patients`);
+                    }
+                } else if (action === 'pending-reviews') {
+                    await loadPendingSummaries();
+                    document.querySelector('.summaries-section').scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (error) {
+                errorHandler.handleApiError(error, 'Quick action failed');
+            }
+        }
+        
+        // Display high-risk patients
+        function displayHighRiskPatients(predictions) {
+            const container = document.getElementById('patient-list');
+            if (!container) return;
+            
+            if (!predictions || predictions.length === 0) {
+                container.innerHTML = '<div class="empty-state">No high-risk patients found</div>';
+                return;
+            }
+            
+            container.innerHTML = predictions.map(pred => `
+                <div class="patient-card high-risk">
+                    <div class="patient-card-header">
+                        <span class="patient-id">Prediction #${pred.prediction_id}</span>
+                        <span class="status-badge ${pred.risk_level}">${pred.risk_level}</span>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="patient-name">${escapeHtml(pred.disease)}</div>
+                        <div class="patient-demographics">
+                            <span><i class="fas fa-calendar" aria-hidden="true"></i> ${pred.patient_age} years</span>
+                            <span><i class="fas fa-percentage" aria-hidden="true"></i> ${(pred.confidence_score * 100).toFixed(0)}% confidence</span>
+                        </div>
+                        <div class="patient-risk">
+                            <span class="risk-indicator ${pred.risk_level}"></span>
+                            <span class="risk-label">${capitalizeFirst(pred.risk_level)} Risk</span>
+                            <span class="risk-score">${(pred.ml_probability * 100).toFixed(0)}%</span>
+                        </div>
+                    </div>
+                    <div class="patient-card-footer">
+                        <span class="patient-timestamp">
+                            <i class="fas fa-clock" aria-hidden="true"></i>
+                            ${formatTimestamp(pred.created_at)}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayPatientList(patients) {
+             const container = document.getElementById('patient-list');
+             container.innerHTML = patients.map(p => `
+                 <div class="patient-card"><strong>Patient #${p.id}</strong> - ${p.severity} <br> <small>${p.symptoms}</small></div>
+             `).join('');
+        }
+        
+        // Utility functions
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function formatTimestamp(timestamp) {
+            if(!timestamp) return 'Just now';
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} min ago`;
+            
+            const diffHours = Math.floor(diffMins / 60);
+            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            
+            const diffDays = Math.floor(diffHours / 24);
+            return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+        }
+        
+        function capitalizeFirst(str) {
+            if(!str) return '';
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    </script>
+</body>
+</html>

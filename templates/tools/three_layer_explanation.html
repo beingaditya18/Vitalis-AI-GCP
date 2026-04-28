@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Three-Layer Explanation - Vitalis AI CDSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor-dashboard-functional.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>.tool-content { padding: 40px; }</style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="logo-section">
+            <a href="/doctor" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            <div class="logo-text" style="margin-left: 20px;">
+                <h1>Three-Layer Explanation</h1>
+                <p>Multi-Level Decision Insights for Patient: Anjali Desai</p>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top: 64px;" class="tool-content">
+        <div class="sidebar-card mb-4" style="border-left: 4px solid var(--danger);">
+            <h4>1. Clinical Summary (High Level)</h4>
+            <p class="text-muted">The AI recommends immediate ECG and Troponin test for suspected Acute Myocardial Infarction. The patient, Anjali Desai (58F), presents with severe chest pain radiating to the left arm, accompanied by diaphoresis and dyspnea.</p>
+        </div>
+        <div class="sidebar-card mb-4" style="border-left: 4px solid var(--warning);">
+            <h4>2. Physiological Reasoning (Mid Level)</h4>
+            <p class="text-muted">The combination of typical anginal pain (radiating to left arm) with autonomic symptoms (sweating) is highly specific for myocardial ischemia. The patient's age and high cholesterol levels (LDL: 180) act as significant predisposing factors for atherosclerotic plaque rupture.</p>
+        </div>
+        <div class="sidebar-card" style="border-left: 4px solid var(--primary);">
+            <h4>3. Statistical Evidence & Guidelines (Deep Level)</h4>
+            <p class="text-muted"><strong>Model confidence: 94%.</strong> Based on the Indian Heart Association guidelines and a training cohort of 250,000 South Asian profiles. South Asians have a 4x greater risk of heart disease compared to the general population. The model aligns with the ACC/AHA guidelines prioritizing a 12-lead ECG within 10 minutes of presentation for these specific symptoms.</p>
+        </div>
+    </div>
+</body>
+</html>

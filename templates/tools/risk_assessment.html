@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Risk Assessment - Vitalis AI CDSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor-dashboard-functional.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tool-header { padding: 40px; background: var(--bg-card); border-bottom: 1px solid var(--border-light); }
+        .tool-content { padding: 40px; }
+    </style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="logo-section">
+            <a href="/doctor" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            <div class="logo-text" style="margin-left: 20px;">
+                <h1>Risk Assessment Tool</h1>
+                <p>AI-Powered Patient Evaluation</p>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top: 64px;">
+        <div class="tool-content">
+            <div class="sidebar-card">
+                <h2><i class="fas fa-chart-line text-primary"></i> Evaluate Patient Risk</h2>
+                <p class="text-muted">Enter patient vitals and symptoms to generate a real-time risk score.</p>
+                <div style="margin-top:20px;">
+                    <div class="search-container mb-3" style="margin-bottom: 15px;">
+                        <input type="text" class="search-input" placeholder="Patient ID...">
+                    </div>
+                    <button class="btn btn-primary" onclick="alert('Running ML Risk Model...')">Run Assessment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prescription Engine - Vitalis AI CDSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor-dashboard-functional.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>.tool-content { padding: 40px; }</style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="logo-section">
+            <a href="/doctor" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="logo-text" style="margin-left: 20px;">
+                <h1>Prescription Engine</h1>
+                <p>AI Safety Checks & Drug Interactions</p>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top: 64px;" class="tool-content">
+        <div class="sidebar-card">
+            <h3><i class="fas fa-prescription-bottle-alt text-primary"></i> Draft Prescription</h3>
+            <div style="margin-top: 20px; display:flex; gap:20px;">
+                <input type="text" class="search-input" style="flex:1;" placeholder="Medication name...">
+                <input type="text" class="search-input" style="width:150px;" placeholder="Dosage">
+                <button class="btn btn-primary">Add</button>
+            </div>
+            <div style="margin-top: 30px; padding: 15px; border: 1px solid var(--border-light); border-radius: 8px;">
+                <h5 class="text-success"><i class="fas fa-check-circle"></i> No known drug interactions detected.</h5>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RAG Assistant - Vitalis AI CDSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor-dashboard-functional.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>.tool-content { padding: 40px; max-width: 800px; margin: auto; }</style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="logo-section">
+            <a href="/doctor" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="logo-text" style="margin-left: 20px;">
+                <h1>RAG Assistant</h1>
+                <p>Retrieval-Augmented Generation</p>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top: 64px;" class="tool-content">
+        <div class="sidebar-card">
+            <h3><i class="fas fa-book-medical text-primary"></i> Medical Literature Search</h3>
+            <div class="search-container mt-4 mb-4" style="margin: 20px 0;">
+                <input type="text" class="search-input" placeholder="Query clinical guidelines...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <button class="btn btn-primary w-100">Search Guidelines</button>
+            <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.02); border-radius: 8px;">
+                <h5>Sources:</h5>
+                <ul class="text-muted">
+                    <li>WHO Guidelines 2024</li>
+                    <li>Internal Hospital Protocol v2</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

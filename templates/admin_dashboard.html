@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Vitalis Patient Portal</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/admin-dashboard-functional.css">
+</head>
+<body>
+
+<div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>Vitalis Admin</h2>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="#overview" class="nav-link active"><i class="fas fa-home"></i> Overview</a></li>
+            <li class="nav-item"><a href="#facilities" class="nav-link"><i class="fas fa-hospital"></i> Facilities Audit</a></li>
+            <li class="nav-item"><a href="/crm" class="nav-link"><i class="fas fa-headset"></i> Call Center CRM</a></li>
+            <li class="nav-item"><a href="/feedback" class="nav-link"><i class="fas fa-comments"></i> Feedback & Reschedule</a></li>
+            <li class="nav-item"><a href="#reports" class="nav-link"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/api/auth/logout" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="header-title">
+                <h1>Admin Dashboard</h1>
+            </div>
+            <div class="header-actions">
+                <button type="button" class="btn-primary" id="btnDownloadReport">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </div>
+        </header>
+
+        <!-- Top Metrics Cards -->
+        <div class="metrics-grid" id="adminMetrics">
+            <!-- Rendered by JS -->
+            <div class="metric-card">
+                <div class="metric-info">
+                    <h3>Loading metrics...</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row - Appointments Timeline & AI Usage -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3><i class="fas fa-chart-line"></i> Appointments Timeline (Last 7 Days)</h3>
+                <div class="chart-container">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3><i class="fas fa-brain"></i> AI Usage Statistics</h3>
+                <div class="chart-container">
+                    <canvas id="aiUsageChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row - District Data & Facility Performance -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3><i class="fas fa-map-marked-alt"></i> District-wise Appointments</h3>
+                    <select id="drilldownLevel" onchange="window.loadDrilldown(this.value)" style="padding:5px; border-radius:4px; border:1px solid var(--gray-300);">
+                        <option value="district">District-wise</option>
+                        <option value="block">Block-wise</option>
+                        <option value="village">Village-wise</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="regionChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3><i class="fas fa-hospital-alt"></i> Top Facility Performance</h3>
+                <div class="chart-container">
+                    <canvas id="facilityChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts Row -->
+        <div class="data-card" id="alertsRow">
+            <div class="data-card-header danger-header">
+                <h3><i class="fas fa-bell"></i> Active Patient Alerts</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="premium-table">
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Action</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alertsTableBody">
+                        <tr><td colspan="4" style="text-align: center; color: var(--gray-600);">Loading alerts...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Table Row -->
+        <div class="data-card" id="facilities">
+            <div class="data-card-header">
+                <h3><i class="fas fa-building"></i> Recent Facilities Audit</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="premium-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Facility Name</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="facilitiesTableBody">
+                        <!-- Injected by JS -->
+                        <tr><td colspan="5" style="text-align: center; color: var(--gray-600);">Loading facilities...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Scripts -->
+<script src="/static/js/main.js"></script>
+<script src="/static/js/admin.js"></script>
+</body>
+</html>

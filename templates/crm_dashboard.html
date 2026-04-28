@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Center CRM - Vitalis Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/facility-dashboard.css">
+    <style>
+        .crm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        @media (max-width: 900px) { .crm-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<div class="dashboard-wrapper">
+    <!-- Main Content Full Width for CRM mode -->
+    <main class="main-content" style="margin-left:0; padding-top:1rem;">
+        <header class="top-header">
+            <div class="header-title">
+                <h1><a href="/admin" style="text-decoration:none; color:inherit;"><i class="fas fa-arrow-left"></i></a> Call Center CRM</h1>
+            </div>
+            <div class="header-actions">
+                <span class="status-badge success"><i class="fas fa-phone-volume"></i> IVRS Active</span>
+            </div>
+        </header>
+
+        <div class="crm-grid">
+            <!-- Lead Intake Form -->
+            <div class="data-card">
+                <div class="data-card-header" style="background:#f8f9fa;">
+                    <h3><i class="fas fa-headset"></i> Incoming Call Intake</h3>
+                </div>
+                <div class="data-card-body">
+                    <form id="leadForm">
+                        <div class="form-group">
+                            <label>Patient Name *</label>
+                            <input type="text" id="patientName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="phone" required placeholder="IVRS incoming number">
+                        </div>
+                        
+                        <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                            <div class="form-group">
+                                <label>District</label>
+                                <select id="district" required>
+                                    <option value="">Select</option>
+                                    <option value="Pune">Pune</option>
+                                    <option value="Mumbai">Mumbai</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Block</label>
+                                <input type="text" id="block" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Village</label>
+                                <input type="text" id="village" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Health Issue (Verbatim)</label>
+                            <textarea id="healthIssue" rows="3" required placeholder="Patient's reported symptoms..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit" style="width:100%;"><i class="fas fa-magic"></i> Submit & Get Recommendations</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- AI Recommendations (hidden until submit) -->
+            <div class="data-card" id="recommendationSection" style="display:none;">
+                <div class="data-card-header" style="background:#e8f4f8; border-bottom:1px solid #bce4f0;">
+                    <h3><i class="fas fa-robot" style="color:#17a2b8;"></i> AI Facility Recommendations</h3>
+                </div>
+                <div class="data-card-body" id="recommendationList">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Cases Table -->
+        <div class="data-card" style="margin-top:2rem;">
+            <div class="data-card-header">
+                <h3><i class="fas fa-list-ul"></i> Active Call Center Cases</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="premium-table">
+                    <thead>
+                        <tr>
+                            <th>Case ID</th>
+                            <th>Patient Name</th>
+                            <th>Phone Number</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="casesTableBody">
+                        <!-- Injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="/static/js/crm.js"></script>
+</body>
+</html>

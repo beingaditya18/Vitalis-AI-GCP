@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Chatbot - Vitalis AI CDSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/doctor-dashboard-functional.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tool-content { padding: 40px; display: flex; flex-direction: column; height: calc(100vh - 64px); box-sizing: border-box; }
+        .chat-box { flex: 1; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 20px; overflow-y: auto; margin-bottom: 20px; }
+        .chat-msg { margin-bottom: 15px; padding: 10px 15px; border-radius: 15px; max-width: 70%; }
+        .msg-ai { background: rgba(37, 99, 235, 0.1); border-bottom-left-radius: 0; align-self: flex-start; }
+        .msg-doc { background: var(--primary); color: white; border-bottom-right-radius: 0; align-self: flex-end; margin-left: auto; }
+    </style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="logo-section">
+            <a href="/doctor" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="logo-text" style="margin-left: 20px;">
+                <h1>AI Clinical Chatbot</h1>
+                <p>Interactive Assistant</p>
+            </div>
+        </div>
+    </header>
+    <div style="margin-top: 64px;" class="tool-content">
+        <div class="chat-box d-flex flex-column">
+            <div class="chat-msg msg-ai">Hello Dr., how can I assist you with a patient case today?</div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <input type="text" class="search-input" style="flex:1;" placeholder="Ask clinical question...">
+            <button class="btn btn-primary"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</body>
+</html>

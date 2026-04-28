@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e3a8a">
+    <meta name="description" content="Vitalis AI - Doctor-first AI that understands patients before the consultation begins">
+    
+    <title>Vitalis AI - Doctor-first Clinical Intelligence</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}" as="style">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <!-- External stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Vitalis AI Design System -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-frontend-integration.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vitalis-responsive-enhancements.css') }}">
+    
+    <style>
+        /* Skip Navigation Link */
+        .skip-nav {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--vitalis-primary, #1e3a8a);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 0 0 4px 0;
+            z-index: 10000;
+            font-weight: 600;
+            transition: top 0.3s ease;
+        }
+        
+        .skip-nav:focus {
+            top: 0;
+            outline: 2px solid #ffffff;
+            outline-offset: 2px;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Fade-in animation classes */
+        .fade-in-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Staggered fade-in for cards */
+        .fade-in-element.delay-1 {
+            transition-delay: 0.1s;
+        }
+        
+        .fade-in-element.delay-2 {
+            transition-delay: 0.2s;
+        }
+        
+        .fade-in-element.delay-3 {
+            transition-delay: 0.3s;
+        }
+        
+        .fade-in-element.delay-4 {
+            transition-delay: 0.4s;
+        }
+        
+        /* Base styles */
+        body {
+            font-family: var(--font-primary, 'Inter', sans-serif);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Landing page specific styles */
+        .landing-container {
+            width: 100%;
+            min-height: 100vh;
+        }
+        
+        /* Hero Section Styles */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.1) 0%, rgba(6, 182, 212, 0.05) 50%, rgba(139, 92, 246, 0.1) 100%);
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .hero-text {
+            z-index: 2;
+        }
+        
+        .hero-headline {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #06b6d4 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-cta-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .cta-primary, .cta-secondary {
+            padding: 1rem 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-primary {
+            background: linear-gradient(135deg, #1e3a8a 0%, #06b6d4 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+        }
+        
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.5);
+            filter: brightness(1.1);
+        }
+        
+        .cta-secondary {
+            background: var(--glass-bg-primary, rgba(255, 255, 255, 0.1));
+            color: #ffffff;
+            backdrop-filter: var(--glass-blur, blur(10px));
+            -webkit-backdrop-filter: var(--glass-blur, blur(10px));
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+        }
+        
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .hero-visual {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-glass-card {
+            background: var(--glass-bg-primary, rgba(255, 255, 255, 0.1));
+            backdrop-filter: var(--glass-blur-strong, blur(20px));
+            -webkit-backdrop-filter: var(--glass-blur-strong, blur(20px));
+            border-radius: var(--radius-3xl, 24px);
+            padding: 3rem;
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+            box-shadow: var(--glass-shadow, 0 8px 32px rgba(0, 0, 0, 0.3));
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-all, all 0.3s ease);
+        }
+        
+        .hero-glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.3);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        
+        .hero-glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(6, 182, 212, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+        
+        .hero-glass-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-glass-icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-glass-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        
+        .hero-glass-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        /* Mobile-responsive CSS (< 768px) */
+        @media (max-width: 767px) {
+            /* Hero section mobile adjustments */
+            .hero-section {
+                min-height: auto;
+                padding: 3rem 1.5rem;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .hero-headline {
+                font-size: 2rem;
+                line-height: 1.3;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero-cta-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .cta-primary, .cta-secondary {
+                width: 100%;
+                text-align: center;
+                padding: 0.875rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .hero-glass-card {
+                padding: 2rem;
+            }
+            
+            .hero-glass-icon {
+                font-size: 3rem;
+            }
+            
+            .hero-glass-title {
+                font-size: 1.25rem;
+            }
+            
+            .hero-glass-text {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Problem Section Styles */
+        .problem-section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .problem-card {
+            background: var(--glass-bg-primary, rgba(255, 255, 255, 0.1));
+            backdrop-filter: var(--glass-blur-strong, blur(20px));
+            -webkit-backdrop-filter: var(--glass-blur-strong, blur(20px));
+            border-radius: var(--radius-2xl, 20px);
+            padding: 2.5rem;
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+            box-shadow: var(--glass-shadow, 0 8px 32px rgba(0, 0, 0, 0.3));
+            transition: var(--transition-all, all 0.3s ease);
+            text-align: center;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        
+        .problem-icon {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .problem-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        
+        .problem-card p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* Mobile-responsive CSS for problem section (< 768px) */
+        @media (max-width: 767px) {
+            .problem-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+                margin-bottom: 2rem;
+            }
+            
+            .problem-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .problem-card {
+                padding: 2rem;
+            }
+            
+            .problem-icon {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .problem-card h3 {
+                font-size: 1.25rem;
+            }
+            
+            .problem-card p {
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Solution Section Styles */
+        .solution-section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .solution-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .solution-step {
+            background: var(--glass-bg-primary, rgba(255, 255, 255, 0.1));
+            backdrop-filter: var(--glass-blur-strong, blur(20px));
+            -webkit-backdrop-filter: var(--glass-blur-strong, blur(20px));
+            border-radius: var(--radius-2xl, 20px);
+            padding: 2.5rem;
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+            box-shadow: var(--glass-shadow, 0 8px 32px rgba(0, 0, 0, 0.3));
+            transition: var(--transition-all, all 0.3s ease);
+            text-align: center;
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+        }
+        
+        .solution-step:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #06b6d4 50%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+        }
+        
+        .solution-step h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        
+        .solution-step p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .flow-arrow {
+            font-size: 2.5rem;
+            color: #06b6d4;
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+        
+        .flow-arrow i {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Mobile-responsive CSS for solution section (< 768px) */
+        @media (max-width: 767px) {
+            .solution-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .solution-flow {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .solution-step {
+                max-width: 100%;
+                width: 100%;
+                min-width: auto;
+                padding: 2rem;
+            }
+            
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .solution-step h3 {
+                font-size: 1.25rem;
+            }
+            
+            .solution-step p {
+                font-size: 0.95rem;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+                font-size: 2rem;
+                margin: 0.5rem 0;
+            }
+        }
+        
+        /* USP Section Styles */
+        .usp-section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .usp-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .usp-card {
+            background: var(--glass-bg-primary, rgba(255, 255, 255, 0.1));
+            backdrop-filter: var(--glass-blur-strong, blur(20px));
+            -webkit-backdrop-filter: var(--glass-blur-strong, blur(20px));
+            border-radius: var(--radius-2xl, 20px);
+            padding: 3rem;
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+            box-shadow: var(--glass-shadow, 0 8px 32px rgba(0, 0, 0, 0.3));
+            transition: var(--transition-all, all 0.3s ease);
+            text-align: center;
+        }
+        
+        .usp-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 16px 48px rgba(6, 182, 212, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        
+        .usp-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #06b6d4 50%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+        }
+        
+        .usp-card h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        
+        .usp-card p {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            margin: 0;
+        }
+        
+        /* Mobile-responsive CSS for USP section (< 768px) */
+        @media (max-width: 767px) {
+            .usp-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .usp-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .usp-card {
+                padding: 2rem;
+            }
+            
+            .usp-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .usp-card h3 {
+                font-size: 1.5rem;
+            }
+            
+            .usp-card p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Impact Section Styles */
+        .impact-section {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .impact-statements {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .impact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .impact-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .impact-icon {
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+        
+        .impact-item p {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #06b6d4 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.4;
+        }
+        
+        /* Mobile-responsive CSS for impact section (< 768px) */
+        @media (max-width: 767px) {
+            .impact-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .impact-statements {
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            
+            .impact-item {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .impact-icon {
+                font-size: 2.5rem;
+            }
+            
+            .impact-item p {
+                font-size: 1.25rem;
+                text-align: center;
+                line-height: 1.5;
+            }
+        }
+        
+        /* Final CTA Section Styles */
+        .final-cta-section {
+            padding: 8rem 2rem;
+            background: linear-gradient(135deg, #1e3a8a 0%, #06b6d4 50%, #8b5cf6 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .final-cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .final-cta-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .final-cta-headline {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 3rem;
+            line-height: 1.3;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cta-primary-large {
+            padding: 1.5rem 4rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.95);
+            color: #1e3a8a;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            animation: pulse-glow 2s infinite;
+        }
+        
+        .cta-primary-large:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 48px rgba(255, 255, 255, 0.4);
+            background: #ffffff;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 8px 48px rgba(255, 255, 255, 0.5);
+            }
+        }
+        
+        /* Mobile-responsive CSS for final CTA section (< 768px) */
+        @media (max-width: 767px) {
+            .final-cta-section {
+                padding: 4rem 1.5rem;
+            }
+            
+            .final-cta-headline {
+                font-size: 1.75rem;
+                margin-bottom: 2rem;
+                line-height: 1.4;
+            }
+            
+            .cta-primary-large {
+                padding: 1rem 2.5rem;
+                font-size: 1.125rem;
+                width: 100%;
+            }
+        }
+        
+        /* Footer Styles */
+        .landing-footer {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-team {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .footer-club {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+        
+        /* Mobile-responsive CSS for footer (< 768px) */
+        @media (max-width: 767px) {
+            .landing-footer {
+                padding: 2rem 1.5rem;
+            }
+            
+            .footer-team {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .footer-club {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .cta-primary-large {
+                animation: none !important;
+            }
+            
+            .hero-glass-card::before {
+                animation: none !important;
+            }
+            
+            .fade-in-element {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
+        
+        /* Focus visible styles for keyboard navigation */
+        .cta-primary:focus-visible,
+        .cta-secondary:focus-visible,
+        .cta-primary-large:focus-visible {
+            outline: 3px solid #ffffff;
+            outline-offset: 4px;
+        }
+        
+        .problem-card:focus-visible,
+        .solution-step:focus-visible,
+        .usp-card:focus-visible {
+            outline: 3px solid #06b6d4;
+            outline-offset: 4px;
+            transform: translateY(-8px) scale(1.02);
+        }
+        
+        /* Remove default focus outline for mouse users */
+        .cta-primary:focus:not(:focus-visible),
+        .cta-secondary:focus:not(:focus-visible),
+        .cta-primary-large:focus:not(:focus-visible),
+        .problem-card:focus:not(:focus-visible),
+        .solution-step:focus:not(:focus-visible),
+        .usp-card:focus:not(:focus-visible) {
+            outline: none;
+        }
+        
+        /* Desktop-responsive CSS (>= 768px) */
+        @media (min-width: 768px) {
+            /* Hero section desktop enhancements */
+            .hero-section {
+                padding: 4rem 3rem;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+                align-items: center;
+            }
+            
+            .hero-headline {
+                font-size: 3.5rem;
+                line-height: 1.2;
+            }
+            
+            .hero-cta-group {
+                flex-direction: row;
+                gap: 1.5rem;
+            }
+            
+            .cta-primary, .cta-secondary {
+                width: auto;
+                padding: 1rem 2.5rem;
+                font-size: 1.125rem;
+            }
+            
+            /* Problem section desktop layout */
+            .problem-section {
+                padding: 6rem 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+                margin-bottom: 3rem;
+            }
+            
+            .problem-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+            
+            .problem-card {
+                padding: 2.5rem;
+            }
+            
+            /* Solution section desktop layout */
+            .solution-section {
+                padding: 6rem 3rem;
+            }
+            
+            .solution-flow {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 2rem;
+            }
+            
+            .solution-step {
+                flex: 1;
+                min-width: 280px;
+                max-width: 350px;
+            }
+            
+            .flow-arrow {
+                transform: rotate(0deg);
+                font-size: 2.5rem;
+            }
+            
+            /* USP section desktop layout */
+            .usp-section {
+                padding: 6rem 3rem;
+            }
+            
+            .usp-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            
+            .usp-card {
+                padding: 3rem;
+            }
+            
+            /* Impact section desktop layout */
+            .impact-section {
+                padding: 6rem 3rem;
+            }
+            
+            .impact-item {
+                flex-direction: row;
+                gap: 1.5rem;
+                justify-content: center;
+            }
+            
+            .impact-item p {
+                font-size: 2rem;
+                text-align: left;
+            }
+            
+            /* Final CTA section desktop layout */
+            .final-cta-section {
+                padding: 8rem 3rem;
+            }
+            
+            .final-cta-headline {
+                font-size: 3rem;
+                margin-bottom: 3rem;
+            }
+            
+            .cta-primary-large {
+                width: auto;
+                padding: 1.5rem 4rem;
+                font-size: 1.5rem;
+            }
+            
+            /* Footer desktop layout */
+            .landing-footer {
+                padding: 3rem 3rem;
+            }
+        }
+        
+        /* Large desktop enhancements (>= 1200px) */
+        @media (min-width: 1200px) {
+            .hero-headline {
+                font-size: 4rem;
+            }
+            
+            .section-title {
+                font-size: 3rem;
+            }
+            
+            .problem-grid,
+            .usp-grid {
+                gap: 2.5rem;
+            }
+            
+            .solution-flow {
+                gap: 3rem;
+            }
+            
+            .impact-item p {
+                font-size: 2.25rem;
+            }
+        }
+        
+        /* Extra large desktop (>= 1440px) */
+        @media (min-width: 1440px) {
+            .hero-section,
+            .problem-section,
+            .solution-section,
+            .usp-section,
+            .impact-section,
+            .final-cta-section {
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Skip Navigation Link -->
+    <a href="#main-content" class="skip-nav" aria-label="Skip to main content">Skip to main content</a>
+    
+    <div class="landing-container">
+        <!-- Hero Section -->
+        <section class="hero-section" id="main-content" role="banner" aria-label="Hero section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-headline">Doctor-first AI that understands patients before the consultation begins.</h1>
+                    <div class="hero-cta-group">
+                        <a href="{{ url_for('auth.login') }}" class="cta-primary" aria-label="Login to Vitalis AI">Login</a>
+                        <a href="{{ url_for('auth.register') }}" class="cta-secondary" aria-label="Sign up for Vitalis AI">Sign Up</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-glass-card" role="complementary" aria-label="Multi-modal intelligence feature">
+                        <div class="hero-glass-content">
+                            <div class="hero-glass-icon" aria-hidden="true">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3 class="hero-glass-title">Multi-modal Intelligence</h3>
+                            <p class="hero-glass-text">Neural networks, Bayesian reasoning, and visual AI working together to provide comprehensive patient insights before consultation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Problem Section -->
+        <section class="problem-section fade-in-element" aria-labelledby="problem-title">
+            <h2 class="section-title" id="problem-title">The Challenge</h2>
+            <div class="problem-grid" role="list">
+                <div class="problem-card fade-in-element delay-1" role="listitem">
+                    <i class="problem-icon fas fa-clock" aria-hidden="true"></i>
+                    <h3>Limited consultation time</h3>
+                    <p>Doctors have only 10-15 minutes per patient</p>
+                </div>
+                <div class="problem-card fade-in-element delay-2" role="listitem">
+                    <i class="problem-icon fas fa-file-medical" aria-hidden="true"></i>
+                    <h3>Incomplete patient history</h3>
+                    <p>Critical information often missed or unavailable</p>
+                </div>
+                <div class="problem-card fade-in-element delay-3" role="listitem">
+                    <i class="problem-icon fas fa-exclamation-triangle" aria-hidden="true"></i>
+                    <h3>Late risk detection</h3>
+                    <p>High-risk patients identified too late</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Solution Section -->
+        <section class="solution-section fade-in-element" aria-labelledby="solution-title">
+            <h2 class="section-title" id="solution-title">How Vitalis Works</h2>
+            <div class="solution-flow" role="list">
+                <div class="solution-step fade-in-element delay-1" role="listitem">
+                    <div class="step-number" aria-label="Step 1">1</div>
+                    <h3>Patient submits symptoms</h3>
+                    <p>Multi-modal intake before consultation</p>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="solution-step fade-in-element delay-2" role="listitem">
+                    <div class="step-number" aria-label="Step 2">2</div>
+                    <h3>AI analyzes & assesses risk</h3>
+                    <p>Neural, Bayesian, and visual intelligence</p>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="solution-step fade-in-element delay-3" role="listitem">
+                    <div class="step-number" aria-label="Step 3">3</div>
+                    <h3>Doctor reviews insights</h3>
+                    <p>Informed consultation with AI support</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why Vitalis Section (USP) -->
+        <section class="usp-section fade-in-element" aria-labelledby="usp-title">
+            <h2 class="section-title" id="usp-title">Why Vitalis AI</h2>
+            <div class="usp-grid" role="list">
+                <div class="usp-card fade-in-element delay-1" role="listitem">
+                    <div class="usp-icon" aria-hidden="true">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Governance-first AI</h3>
+                    <p>Built with safety, ethics, and compliance at the core</p>
+                </div>
+                <div class="usp-card fade-in-element delay-2" role="listitem">
+                    <div class="usp-icon" aria-hidden="true">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Doctor-in-the-loop</h3>
+                    <p>AI assists, doctors decide - always</p>
+                </div>
+                <div class="usp-card fade-in-element delay-3" role="listitem">
+                    <div class="usp-icon" aria-hidden="true">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Patient Shield™</h3>
+                    <p>Privacy-first architecture with data protection</p>
+                </div>
+                <div class="usp-card fade-in-element delay-4" role="listitem">
+                    <div class="usp-icon" aria-hidden="true">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Multi-modal intelligence</h3>
+                    <p>Neural, Bayesian, and visual AI working together</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Impact Section -->
+        <section class="impact-section fade-in-element" aria-labelledby="impact-title">
+            <h2 class="section-title" id="impact-title">Real Impact</h2>
+            <div class="impact-statements" role="list">
+                <div class="impact-item fade-in-element delay-1" role="listitem">
+                    <span class="impact-icon" aria-hidden="true">⚡</span>
+                    <p>Reduce consultation prep time by 60%</p>
+                </div>
+                <div class="impact-item fade-in-element delay-2" role="listitem">
+                    <span class="impact-icon" aria-hidden="true">🎯</span>
+                    <p>Catch high-risk patients before they walk in</p>
+                </div>
+                <div class="impact-item fade-in-element delay-3" role="listitem">
+                    <span class="impact-icon" aria-hidden="true">🔬</span>
+                    <p>Explainable AI that doctors can trust</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Final CTA Section -->
+        <section class="final-cta-section fade-in-element" aria-labelledby="final-cta-title">
+            <div class="final-cta-content">
+                <h2 class="final-cta-headline" id="final-cta-title">Built for doctors. Designed for real-world healthcare.</h2>
+                <a href="{{ url_for('auth.register') }}" class="cta-primary-large" aria-label="Get started with Vitalis AI">Get Started</a>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="landing-footer" role="contentinfo">
+            <div class="footer-content">
+                <p class="footer-team">Team Rockers </p>
+                <p class="footer-club">Aditya Mandloi </p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    
+    <!-- Landing page JavaScript -->
+    <script defer>
+        // Smooth scroll for section navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scroll behavior for any anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId && targetId !== '#') {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Intersection Observer for fade-in animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Optionally unobserve after animation to improve performance
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all elements with fade-in-element class
+            document.querySelectorAll('.fade-in-element').forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Keyboard navigation support for cards
+            document.querySelectorAll('.problem-card, .solution-step, .usp-card').forEach(card => {
+                card.setAttribute('tabindex', '0');
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        // Trigger any click handlers if present
+                        card.click();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
