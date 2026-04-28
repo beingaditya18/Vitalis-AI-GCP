@@ -158,3 +158,87 @@ h1, h2, h3, h4, h5, h6 {
   gap: 24px;
   margin-bottom: 40px;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    border-right: none;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  .sidebar-logo {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .nav-item {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 8px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+  
+  .main-content {
+    padding: 15px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .glass-panel {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .btn-glass, .btn-danger-glass {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 12px 20px;
+  }
+  
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.1rem; }
+  
+  .table-responsive {
+    font-size: 0.85rem;
+  }
+  
+  .form-control {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 10px;
+  }
+  
+  .glass-panel {
+    padding: 12px;
+  }
+  
+  .sidebar {
+    padding: 10px;
+  }
+  
+  .nav-item {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  
+  h1 { font-size: 1.3rem; }
+  h2 { font-size: 1.1rem; }
+  h3 { font-size: 1rem; }
+}

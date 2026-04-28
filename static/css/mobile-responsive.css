@@ -1,0 +1,183 @@
+/* Mobile-First Responsive Design for Vitalis AI */
+
+/* Base Mobile Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100% !important;
+    height: auto;
+    padding: 10px;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid var(--glass-border);
+    overflow-x: auto;
+  }
+  
+  .sidebar .nav-item {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  
+  .main-content {
+    padding: 15px !important;
+    width: 100%;
+  }
+  
+  /* Mobile Tables */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  table {
+    font-size: 0.85rem;
+  }
+  
+  /* Mobile Forms */
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-control, .glass-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+  }
+  
+  /* Mobile Buttons */
+  .btn, .btn-glass, .btn-danger-glass {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    touch-action: manipulation;
+  }
+  
+  .btn-group {
+    flex-direction: column;
+  }
+  
+  .btn-group .btn {
+    border-radius: 8px !important;
+    margin-bottom: 5px;
+  }
+  
+  /* Mobile Cards */
+  .glass-panel, .card {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 12px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 15px;
+  }
+  
+  /* Mobile Typography */
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1.1rem; }
+  h5 { font-size: 1rem; }
+  h6 { font-size: 0.9rem; }
+  
+  /* Mobile Spacing */
+  .container-fluid {
+    padding: 10px;
+  }
+  
+  .row {
+    margin: 0 -5px;
+  }
+  
+  .col, [class*="col-"] {
+    padding: 0 5px;
+    margin-bottom: 15px;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .main-content {
+    padding: 10px !important;
+  }
+  
+  .glass-panel, .card {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .sidebar {
+    padding: 8px;
+  }
+  
+  .nav-item {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.1rem; }
+  
+  .btn, .btn-glass {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  .btn, .nav-item, .glass-panel {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+  .sidebar {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 8px;
+  }
+  
+  .sidebar .nav-item {
+    flex-shrink: 0;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .glass-panel {
+    border-width: 0.5px;
+  }
+}

@@ -426,3 +426,139 @@ main {
   padding: 20px;
   font-style: italic;
 }
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+    padding-top: 60px;
+  }
+  
+  .dashboard-header {
+    height: 60px;
+    padding: 0 15px;
+  }
+  
+  .logo-text h1 {
+    font-size: 1rem;
+  }
+  
+  .logo-text p {
+    display: none;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  
+  .nav-item {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 8px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  
+  .main-content {
+    padding: 15px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .tools-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .glass-panel, .card {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 12px 20px;
+  }
+  
+  .form-control {
+    font-size: 16px;
+    padding: 12px;
+  }
+  
+  .table-responsive {
+    font-size: 0.85rem;
+  }
+  
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.1rem; }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header {
+    height: 56px;
+    padding: 0 10px;
+  }
+  
+  .dashboard-container {
+    padding-top: 56px;
+  }
+  
+  .main-content {
+    padding: 10px;
+  }
+  
+  .glass-panel, .card {
+    padding: 12px;
+  }
+  
+  .sidebar {
+    padding: 10px;
+  }
+  
+  .nav-item {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  
+  h1 { font-size: 1.3rem; }
+  h2 { font-size: 1.1rem; }
+  h3 { font-size: 1rem; }
+  
+  .btn {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  .btn, .nav-item, .tool-card {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+  .sidebar {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 8px;
+  }
+  
+  .sidebar .nav-item {
+    flex-shrink: 0;
+  }
+}
